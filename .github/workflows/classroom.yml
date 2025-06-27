@@ -27,7 +27,7 @@ jobs:
       with:
         test-name: n<15 (20 pts.)
         command: "./grading/test.sh -m grading/group1.txt -t 0.1 -l 64"
-        timeout: 10
+        timeout: 1
         max-score: 20
     - name: Autograding Reporter
       uses: classroom-resources/autograding-grading-reporter@v1
