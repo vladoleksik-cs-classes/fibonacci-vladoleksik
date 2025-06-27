@@ -1,0 +1,30 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: n<15 (20 pts.)
+      id: n-15-20-pts
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: n<15 (20 pts.)
+        setup-command: "./compilation/build.sh"
+        command: "./grading/test.sh -m group1.txt -t 0.1 -l 64"
+        timeout: 1
+        max-score: 20
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        N-15-20-PTS_RESULTS: "${{steps.n-15-20-pts.outputs.result}}"
+      with:
+        runners: n-15-20-pts
