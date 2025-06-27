@@ -19,8 +19,6 @@ EOF
 TIME_LIMIT=2
 MEM_LIMIT_MB=256
 
-echo "Starting test."
-
 while getopts "m:t:l:" opt; do
   case "$opt" in
     m) MANIFEST="$OPTARG" ;;
@@ -51,6 +49,9 @@ i=0
 
 # ANSI colors
 RED="\e[31m"; GREEN="\e[32m"; YELLOW="\e[33m"; RESET="\e[0m"
+
+pwd
+echo "$MANIFEST"
 
 while read -r infile okfile; do
   ((i++))
