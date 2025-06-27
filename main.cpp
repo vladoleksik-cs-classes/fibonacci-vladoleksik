@@ -30,7 +30,7 @@ int main() {
     }
 
     // Output the result to the output file
-    fout << current << endl;
+    fout << current << '\n';
 
     return 0;
 }
