@@ -1,6 +1,6 @@
 # Fibonacci
 
-## Obiective
+## Obiectiv
 Scrieți, în fișierul `main.cpp`, programul care, citind din fișierul `input.txt` un număr `n`, va scrie în fișierul `output.txt` al `n`-lea termen al șirului lui Fibonacci, modulo `1000000007`.
 
 ## Precizări
