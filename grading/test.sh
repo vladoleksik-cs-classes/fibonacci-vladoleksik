@@ -50,10 +50,8 @@ i=0
 # ANSI colors
 RED="\e[31m"; GREEN="\e[32m"; YELLOW="\e[33m"; RESET="\e[0m"
 
-pwd
-echo "$MANIFEST"
-
 while read -r infile okfile; do
+  echo "Testing."
   ((i++))
   echo -n "Test #$i: "
 
