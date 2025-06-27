@@ -19,6 +19,8 @@ EOF
 TIME_LIMIT=2
 MEM_LIMIT_MB=256
 
+echo "Starting test."
+
 while getopts "m:t:l:" opt; do
   case "$opt" in
     m) MANIFEST="$OPTARG" ;;
