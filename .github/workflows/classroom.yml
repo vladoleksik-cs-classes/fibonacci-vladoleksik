@@ -13,8 +13,12 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+    - name: Prepare build
+      run: chmod +x build.sh
     - name: Build
       run: ./compilation/build.sh
+    - name: Prepare testing
+      run: chmod +x test.sh
     - name: n<15 (20 pts.)
       id: n-15-20-pts
       uses: classroom-resources/autograding-command-grader@v1
