@@ -51,7 +51,6 @@ i=0
 RED="\e[31m"; GREEN="\e[32m"; YELLOW="\e[33m"; RESET="\e[0m"
 
 while read -r infile okfile; do
-  echo "Testing."
   ((i++))
   echo -n "Test #$i: "
 
@@ -78,6 +77,8 @@ while read -r infile okfile; do
   mapfile -t stats < "$TMPTIME"
   time_used=${stats[0]#TIME:}
   mem_used=${stats[1]#MEM:}
+
+  echo "Test completed."
 
   if [ $status -eq 124 ]; then
     echo -e "${YELLOW}TIMEOUT${RESET} (${time_used}s)"
