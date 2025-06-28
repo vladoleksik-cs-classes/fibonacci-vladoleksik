@@ -89,7 +89,7 @@ while read -r infile okfile; do
   #echo status
   #echo time_used
   #echo mem_used
-  cat output.txt
+  #cat output.txt
 
   if diff -q output.txt "$okfile" >/dev/null; then
     echo -e "${GREEN}PASS${RESET}"
