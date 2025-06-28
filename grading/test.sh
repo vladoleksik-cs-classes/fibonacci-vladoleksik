@@ -68,56 +68,56 @@ while read -r infile okfile; do
   # prepare fixed I/O names
   cp "$infile" input.txt
 
-  #TMPTIME=$(mktemp)
+  TMPTIME=$(mktemp)
 
-  #{
-  #  ulimit -v "$MEM_LIMIT_KB"                   # cap virtual memory
-  #  exec timeout "${TIME_LIMIT}s" \
-  #    /usr/bin/time -f "TIME:%e\nMEM:%M" -o "$TMPTIME" \
-  #    "$PROGRAM"                               # reads input.txt, writes output.txt
-  #} 2>/dev/null
-  #status=$?
+  {
+    ulimit -v "$MEM_LIMIT_KB"                   # cap virtual memory
+    exec timeout "${TIME_LIMIT}s" \
+      /usr/bin/time -f "TIME:%e\nMEM:%M" -o "$TMPTIME" \
+      "$PROGRAM"                               # reads input.txt, writes output.txt
+  } 2>/dev/null
+  status=$?
 
-  prlimit --cpu=$TIME_LIMIT --as=$MEM_LIMIT_KB \
-    timeout $((TIME_LIMIT*10))s "$PROGRAM"
+  #prlimit --cpu=$TIME_LIMIT --as=$MEM_LIMIT_KB \
+  #  timeout $((TIME_LIMIT*10))s "$PROGRAM"
 
   # read stats
-  #mapfile -t stats < "$TMPTIME"
-  #time_used=${stats[0]#TIME:}
-  #mem_used=${stats[1]#MEM:}
+  mapfile -t stats < "$TMPTIME"
+  time_used=${stats[0]#TIME:}
+  mem_used=${stats[1]#MEM:}
 
-  if diff -q output.txt "$okfile" >/dev/null; then
-    echo -e "${GREEN}PASS${RESET}"
-    ((pass++))
-  else
-    echo -e "${RED}FAIL${RESET}"
-    echo "  └─ infile:    $infile"
-    echo "  └─ expected:  $okfile"
-    echo "  └─ got:       output.txt"
-    ((fail++))
-  fi
-
-  #if [ $status -eq 124 ]; then
-  #  echo -e "${YELLOW}TIMEOUT${RESET} (${time_used}s)"
-  #  ((fail++))
-  #elif [ $status -ne 0 ]; then
-  #  echo -e "${RED}RUNTIME ERROR (exit $status)${RESET}"
-  #  ((fail++))
+  #if diff -q output.txt "$okfile" >/dev/null; then
+  #  echo -e "${GREEN}PASS${RESET}"
+  #  ((pass++))
   #else
-  #  if diff -q output.txt "$okfile" >/dev/null; then
-  #    echo -e "${GREEN}PASS${RESET} (time=${time_used}s, mem=${mem_used}KB)"
-  #    ((pass++))
-  #  else
-  #    echo -e "${RED}FAIL${RESET} (time=${time_used}s, mem=${mem_used}KB)"
-  #    echo "  └─ infile:    $infile"
-  #    echo "  └─ expected:  $okfile"
-  #    echo "  └─ got:       output.txt"
-  #    ((fail++))
-  #  fi
+  #  echo -e "${RED}FAIL${RESET}"
+  #  echo "  └─ infile:    $infile"
+  #  echo "  └─ expected:  $okfile"
+  #  echo "  └─ got:       output.txt"
+  #  ((fail++))
   #fi
 
+  if [ $status -eq 124 ]; then
+    echo -e "${YELLOW}TIMEOUT${RESET} (${time_used}s)"
+    ((fail++))
+  elif [ $status -ne 0 ]; then
+    echo -e "${RED}RUNTIME ERROR (exit $status)${RESET}"
+    ((fail++))
+  else
+    if diff -q output.txt "$okfile" >/dev/null; then
+      echo -e "${GREEN}PASS${RESET} (time=${time_used}s, mem=${mem_used}KB)"
+      ((pass++))
+    else
+      echo -e "${RED}FAIL${RESET} (time=${time_used}s, mem=${mem_used}KB)"
+      echo "  └─ infile:    $infile"
+      echo "  └─ expected:  $okfile"
+      echo "  └─ got:       output.txt"
+      ((fail++))
+    fi
+  fi
+
   # cleanup for next test
-  rm -f input.txt output.txt
+  rm -f input.txt output.txt "$TMPTIME"
 done < "$MANIFEST"
 
 echo
