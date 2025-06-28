@@ -93,13 +93,13 @@ while read -r infile okfile; do
 
   if diff -q output.txt "$okfile" >/dev/null; then
     echo -e "${GREEN}PASS${RESET}"
-    ((pass++))
+    pass=$(( pass + 1 ))
   else
     echo -e "${RED}FAIL${RESET}"
     echo "  └─ infile:    $infile"
     echo "  └─ expected:  $okfile"
     echo "  └─ got:       output.txt"
-    ((fail++))
+    fail=$(( fail + 1 ))
   fi
 
   #if [ $status -eq 124 ]; then
