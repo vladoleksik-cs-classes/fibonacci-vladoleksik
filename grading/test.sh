@@ -52,10 +52,7 @@ RED="\e[31m"; GREEN="\e[32m"; YELLOW="\e[33m"; RESET="\e[0m"
 
 #cat "$MANIFEST"
 
-CPU_TIME_LIMIT=$(awk -v x="$TIME_LIMIT" '
-  function ceil(v) { return (v % 1) ? int(v) + 1 : v }
-  END { print ceil(x) }
-')
+CPU_TIME_LIMIT=$(($(printf "%.0f" $TIME_LIMIT)+1))
 
 while read -r infile okfile; do
   i=$(( i + 1 ))
