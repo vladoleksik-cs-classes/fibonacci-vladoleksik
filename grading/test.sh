@@ -58,9 +58,7 @@ while read -r infile okfile; do
 
   echo $infile
   echo $okfile
-done < <(cat "$MANIFEST")
-
-exit 0
+done < "$MANIFEST"
 
 echo
 echo "Summary: $pass passed, $fail failed out of $i tests."
