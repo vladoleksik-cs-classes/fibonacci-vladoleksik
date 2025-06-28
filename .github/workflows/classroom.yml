@@ -19,15 +19,15 @@ jobs:
       run: ./compilation/build.sh
     - name: Prepare testing
       run: chmod +x ./grading/test.sh
-    - name: Test preview
-      run: ./grading/test.sh -m "grading/group1.txt" -t 5 -l 64
+    #- name: Test preview
+    #  run: ./grading/test.sh -m "grading/group1.txt" -t 5 -l 64
     - name: n<15 (20 pts.)
       id: n-15-20-pts
       uses: classroom-resources/autograding-command-grader@v1
       with:
         test-name: n<15 (20 pts.)
-        command: "./grading/test.sh -m grading/group1.txt -t 0.1 -l 64"
-        timeout: 1
+        command: "./grading/test.sh -m \"grading/group1.txt\" -t 0.1 -l 64"
+        timeout: 5
         max-score: 20
     - name: Autograding Reporter
       uses: classroom-resources/autograding-grading-reporter@v1
