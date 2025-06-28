@@ -50,11 +50,11 @@ i=0
 # ANSI colors
 RED="\e[31m"; GREEN="\e[32m"; YELLOW="\e[33m"; RESET="\e[0m"
 
-cat "$MANIFEST"
+#cat "$MANIFEST"
 
 while read -r infile okfile; do
-  ((i++))
-  #echo -n "Test #$i: "
+  i=$(( i + 1 ))
+  echo -n "Test #$i: "
 
   echo $infile
   echo $okfile
