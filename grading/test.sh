@@ -54,7 +54,7 @@ cat "$MANIFEST"
 
 while read -r infile okfile; do
   ((i++))
-  echo -n "Test #$i: "
+  #echo -n "Test #$i: "
 
   echo $infile
   echo $okfile
