@@ -60,8 +60,12 @@ while read -r infile okfile; do
     continue
   fi
 
+  echo "Configuring environment"
+
   # prepare fixed I/O names
   cp "$infile" input.txt
+
+  echo "Running program"
 
   #TMPTIME=$(mktemp)
 
