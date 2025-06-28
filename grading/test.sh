@@ -73,8 +73,8 @@ while read -r infile okfile; do
   #} 2>/dev/null
   #status=$?
 
-  prlimit --cpu=$TIME_LIMIT --as=$MEM_LIMIT_KB \
-    timeout $((TIME_LIMIT*10))s sleep .1
+  #prlimit --cpu=$TIME_LIMIT --as=$MEM_LIMIT_KB \
+  #  timeout $((TIME_LIMIT*10))s sleep .1
 
   # read stats
   #mapfile -t stats < "$TMPTIME"
