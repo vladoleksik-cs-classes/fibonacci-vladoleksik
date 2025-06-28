@@ -50,6 +50,8 @@ i=0
 # ANSI colors
 RED="\e[31m"; GREEN="\e[32m"; YELLOW="\e[33m"; RESET="\e[0m"
 
+echo $MANIFEST
+
 while read -r infile okfile; do
   ((i++))
   echo -n "Test #$i: "
@@ -115,7 +117,7 @@ while read -r infile okfile; do
   #fi
 
   # cleanup for next test
-  rm -f input.txt output.txt "$TMPTIME"
+  rm -f input.txt output.txt
 done < "$MANIFEST"
 
 echo
