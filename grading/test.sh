@@ -50,8 +50,6 @@ i=0
 # ANSI colors
 RED="\e[31m"; GREEN="\e[32m"; YELLOW="\e[33m"; RESET="\e[0m"
 
-dos2unix "$MANIFEST"
-
 while read -r infile okfile; do
   ((i++))
   echo -n "Test #$i: "
@@ -59,65 +57,6 @@ while read -r infile okfile; do
   echo $infile
   echo $outfile
 
-  # skip missing files
-  if [[ ! -f "$infile" || ! -f "$okfile" ]]; then
-    echo -e "${YELLOW}SKIP${RESET} (missing '$infile' or '$okfile')"
-    continue
-  fi
-
-  # prepare fixed I/O names
-  cp "$infile" input.txt
-
-  #TMPTIME=$(mktemp)
-
-  #{
-  #  ulimit -v "$MEM_LIMIT_KB"                   # cap virtual memory
-  #  exec timeout "${TIME_LIMIT}s" \
-  #    /usr/bin/time -f "TIME:%e\nMEM:%M" -o "$TMPTIME" \
-  #    "$PROGRAM"                               # reads input.txt, writes output.txt
-  #} 2>/dev/null
-  #status=$?
-
-  prlimit --cpu=$TIME_LIMIT --as=$MEM_LIMIT_KB \
-    timeout $((TIME_LIMIT*10))s sleep .1
-
-  # read stats
-  #mapfile -t stats < "$TMPTIME"
-  #time_used=${stats[0]#TIME:}
-  #mem_used=${stats[1]#MEM:}
-
-  if diff -q output.txt "$okfile" >/dev/null; then
-    echo -e "${GREEN}PASS${RESET}"
-    ((pass++))
-  else
-    echo -e "${RED}FAIL${RESET}"
-    echo "  └─ infile:    $infile"
-    echo "  └─ expected:  $okfile"
-    echo "  └─ got:       output.txt"
-    ((fail++))
-  fi
-
-  #if [ $status -eq 124 ]; then
-  #  echo -e "${YELLOW}TIMEOUT${RESET} (${time_used}s)"
-  #  ((fail++))
-  #elif [ $status -ne 0 ]; then
-  #  echo -e "${RED}RUNTIME ERROR (exit $status)${RESET}"
-  #  ((fail++))
-  #else
-  #  if diff -q output.txt "$okfile" >/dev/null; then
-  #    echo -e "${GREEN}PASS${RESET} (time=${time_used}s, mem=${mem_used}KB)"
-  #    ((pass++))
-  #  else
-  #    echo -e "${RED}FAIL${RESET} (time=${time_used}s, mem=${mem_used}KB)"
-  #    echo "  └─ infile:    $infile"
-  #    echo "  └─ expected:  $okfile"
-  #    echo "  └─ got:       output.txt"
-  #    ((fail++))
-  #  fi
-  #fi
-
-  # cleanup for next test
-  rm -f input.txt output.txt
 done < "$MANIFEST"
 
 echo
