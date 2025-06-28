@@ -86,6 +86,11 @@ while read -r infile okfile; do
   time_used=${stats[0]#TIME:}
   mem_used=${stats[1]#MEM:}
 
+  echo status
+  echo time_used
+  echo mem_used
+  cat output.txt
+
   #if diff -q output.txt "$okfile" >/dev/null; then
   #  echo -e "${GREEN}PASS${RESET}"
   #  ((pass++))
