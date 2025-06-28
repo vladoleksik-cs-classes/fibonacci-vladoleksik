@@ -52,6 +52,8 @@ RED="\e[31m"; GREEN="\e[32m"; YELLOW="\e[33m"; RESET="\e[0m"
 
 #cat "$MANIFEST"
 
+CPU_TIME_LIMIT=$(( ( TIME_LIMIT + 0.5 ) / 1 ))
+
 while read -r infile okfile; do
   i=$(( i + 1 ))
   echo -n "Test #$i: "
@@ -78,8 +80,8 @@ while read -r infile okfile; do
   #} 2>/dev/null
   #status=$?
 
-  prlimit --cpu=$TIME_LIMIT \
-    timeout $((TIME_LIMIT*10))s "$PROGRAM"
+  prlimit --cpu=$CPU_TIME_LIMIT \
+    timeout $((TIME_LIMIT*2))s "$PROGRAM"
 
   # read stats
   #mapfile -t stats < "$TMPTIME"
