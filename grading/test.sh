@@ -54,6 +54,8 @@ while read -r infile okfile; do
   ((i++))
   echo -n "Test #$i: "
 
+  echo "Checking test manifest"
+
   # skip missing files
   if [[ ! -f "$infile" || ! -f "$okfile" ]]; then
     echo -e "${YELLOW}SKIP${RESET} (missing '$infile' or '$okfile')"
@@ -86,15 +88,15 @@ while read -r infile okfile; do
   #mem_used=${stats[1]#MEM:}
 
   if diff -q output.txt "$okfile" >/dev/null; then
-      echo -e "${GREEN}PASS${RESET}"
-      ((pass++))
-    else
-      echo -e "${RED}FAIL${RESET}"
-      echo "  └─ infile:    $infile"
-      echo "  └─ expected:  $okfile"
-      echo "  └─ got:       output.txt"
-      ((fail++))
-    fi
+    echo -e "${GREEN}PASS${RESET}"
+    ((pass++))
+  else
+    echo -e "${RED}FAIL${RESET}"
+    echo "  └─ infile:    $infile"
+    echo "  └─ expected:  $okfile"
+    echo "  └─ got:       output.txt"
+    ((fail++))
+  fi
 
   #if [ $status -eq 124 ]; then
   #  echo -e "${YELLOW}TIMEOUT${RESET} (${time_used}s)"
