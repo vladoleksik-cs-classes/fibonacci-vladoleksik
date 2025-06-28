@@ -52,7 +52,10 @@ RED="\e[31m"; GREEN="\e[32m"; YELLOW="\e[33m"; RESET="\e[0m"
 
 #cat "$MANIFEST"
 
-CPU_TIME_LIMIT=$(echo "$TIME_LIMIT / 1" | bc -l)
+CPU_TIME_LIMIT=$(awk -v x="$TIME_LIMIT" '
+  function ceil(v) { return (v % 1) ? int(v) + 1 : v }
+  END { print ceil(x) }
+')
 
 while read -r infile okfile; do
   i=$(( i + 1 ))
@@ -81,7 +84,7 @@ while read -r infile okfile; do
   #status=$?
 
   prlimit --cpu=$CPU_TIME_LIMIT \
-    timeout $((TIME_LIMIT*2))s "$PROGRAM"
+    timeout $((TIME_LIMIT * 2))s "$PROGRAM"
 
   # read stats
   #mapfile -t stats < "$TMPTIME"
