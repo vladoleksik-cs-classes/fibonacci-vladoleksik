@@ -50,7 +50,7 @@ i=0
 # ANSI colors
 RED="\e[31m"; GREEN="\e[32m"; YELLOW="\e[33m"; RESET="\e[0m"
 
-cat -A "$MANIFEST"
+dos2unix "$MANIFEST"
 
 while read -r infile okfile; do
   ((i++))
