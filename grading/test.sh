@@ -52,7 +52,7 @@ RED="\e[31m"; GREEN="\e[32m"; YELLOW="\e[33m"; RESET="\e[0m"
 
 #cat "$MANIFEST"
 
-CPU_TIME_LIMIT=$(( ( TIME_LIMIT + 0.5 ) / 1 ))
+CPU_TIME_LIMIT=$(printf "%.0f" "$TIME_LIMIT")
 
 while read -r infile okfile; do
   i=$(( i + 1 ))
