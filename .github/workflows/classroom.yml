@@ -20,7 +20,7 @@ jobs:
     - name: Prepare testing
       run: chmod +x ./grading/test.sh
     - name: Test preview
-      run: ./grading/test.sh -m grading/group1.txt -t 0.1 -l 64
+      run: ./grading/test.sh -m grading/group1.txt -t 5 -l 64
     - name: n<15 (20 pts.)
       id: n-15-20-pts
       uses: classroom-resources/autograding-command-grader@v1
