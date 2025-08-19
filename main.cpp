@@ -9,7 +9,7 @@ ofstream fout("output.txt");
 int main()
 {
     int n;
-    long long int b00, b01, b10, b11;
+    int b00, b01, b10, b11;
     unsigned int i;
     long long int b[2][2] = { {1,0},{0,1} }, a[2][2] = { {1,1},{1,0} };
     fin >> n;
